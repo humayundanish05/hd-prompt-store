@@ -1,0 +1,162 @@
+/* -----------------------------------
+   GLOBAL STYLE
+----------------------------------- */
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #0f0f14;
+    color: #ffffff;
+}
+
+/* -----------------------------------
+   HEADER
+----------------------------------- */
+header {
+    background: #12121b;
+    padding: 20px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #222232;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 26px;
+    color: #d7e0ff;
+}
+
+nav a {
+    color: #7da2ff;
+    text-decoration: none;
+    margin-left: 18px;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+nav a:hover,
+nav a.active {
+    color: #ffffff;
+}
+
+/* -----------------------------------
+   CONTAINER
+----------------------------------- */
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+/* -----------------------------------
+   TITLE
+----------------------------------- */
+.page-title {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #9aa5c7;
+    margin-bottom: 30px;
+}
+
+/* -----------------------------------
+   GRID FOR SAVED PROMPTS
+----------------------------------- */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+/* -----------------------------------
+   CARD DESIGN
+----------------------------------- */
+.card {
+    background: #16161f;
+    border-radius: 14px;
+    padding: 14px;
+    border: 1px solid #222230;
+    transition: 0.25s;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 15px #4b63ff44;
+    border-color: #4b63ff;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 19px;
+    color: #dbe3ff;
+}
+
+.meta {
+    font-size: 14px;
+    color: #9AA2C6;
+    margin: 6px 0;
+}
+
+/* -----------------------------------
+   BUTTONS
+----------------------------------- */
+.btn {
+    padding: 10px 15px;
+    background: linear-gradient(135deg, #4b63ff, #667aff);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 12px #4b63ff77;
+}
+
+.btn.remove {
+    background: #2f2f3a;
+    margin-left: 8px;
+}
+
+.btn.remove:hover {
+    background: #ff4e4e;
+    box-shadow: 0 0 10px #ff4e4e66;
+}
+
+/* Button Row */
+.card-buttons {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+}
+
+/* -----------------------------------
+   EMPTY MESSAGE
+----------------------------------- */
+.empty-box {
+    text-align: center;
+    padding: 60px 20px;
+    color: #9da6c7;
+    font-size: 18px;
+}
+
+/* -----------------------------------
+   RESPONSIVE
+----------------------------------- */
+@media (max-width: 700px) {
+    header h1 {
+        font-size: 22px;
+    }
+}
