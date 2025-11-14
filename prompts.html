@@ -1,30 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Prompts</title>
-    <link rel="stylesheet" href="assets/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HD Prompt Store — Prompts</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
 
-<header>
-    <h1>AI Prompts</h1>
-</header>
-<div class="categories">
+  <!-- HEADER -->
+  <header class="top-header">
+    <h1>HD Prompt Store</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="prompts.html" class="active">Prompts</a>
+      <a href="collection.html">My Collection</a>
+    </nav>
+  </header>
+
+  <!-- CATEGORY BUTTONS -->
+  <div class="categories">
     <button onclick="filterByCategory('All')">All</button>
     <button onclick="filterByCategory('3D')">3D</button>
+    <button onclick="filterByCategory('Fantasy')">Fantasy</button>
     <button onclick="filterByCategory('Anime')">Anime</button>
     <button onclick="filterByCategory('Logo')">Logo</button>
     <button onclick="filterByCategory('Portrait')">Portrait</button>
-</div>
+  </div>
 
-<div id="prompt-list"></div>
+  <!-- PROMPT LIST -->
+  <div class="grid-container" id="prompt-list"></div>
 
-<section id="prompt-list" class="grid"></section>
+  <!-- IMAGE PREVIEW MODAL -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <span id="closeModal" class="close-btn">×</span>
+      <div id="modalImageWrap"></div>
+    </div>
+  </div>
 
-<script src="assets/script.js"></script>
-
+  <script src="script.js"></script>
 </body>
 </html>
-
