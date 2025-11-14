@@ -1,16 +1,88 @@
 [
+    
     {
         "id": 1,
         "title": "Cyberpunk Samurai",
         "category": "3D",
-        "prompt": "Ultra-detailed cyberpunk samurai, neon lights, rain, 4K realism",
-        "image": "https://via.placeholder.com/300"
+        "model": "Midjourney",
+        "prompt": "Ultra-detailed cyberpunk samurai, neon reflections, wet street, glowing katana, rain ambience, 4K hyperrealistic lighting",
+        "image": "https://images.unsplash.com/photo-1546443046-ed1ce6ffd1ac?auto=format&fit=crop&w=800"
     },
     {
         "id": 2,
-        "title": "Fantasy Castle",
+        "title": "Floating Fantasy Castle",
         "category": "Fantasy",
-        "prompt": "A floating fantasy castle above clouds, magical atmosphere",
-        "image": "https://via.placeholder.com/300"
+        "model": "Stable Diffusion",
+        "prompt": "A floating crystal castle in the sky, rays of sunlight, magical atmosphere, soft clouds, epic fantasy scene",
+        "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800"
+    },
+    {
+        "id": 3,
+        "title": "Anime Girl Sunset Scene",
+        "category": "Anime",
+        "model": "Niji",
+        "prompt": "Beautiful anime girl standing near ocean during sunset, soft warm lighting, detailed hair flow, studio quality anime art",
+        "image": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800"
+    },
+    {
+        "id": 4,
+        "title": "Minimalist Logo Design",
+        "category": "Logo",
+        "model": "Midjourney",
+        "prompt": "Modern minimalist logo, clean lines, flat vector style, elegant typography, geometric balance",
+        "image": "https://via.placeholder.com/500x500?text=Logo"
+    },
+    {
+        "id": 5,
+        "title": "Realistic Male Portrait",
+        "category": "Portrait",
+        "model": "Midjourney",
+        "prompt": "Ultra-realistic portrait of a man, natural lighting, depth of field, sharp skin texture, DSLR style",
+        "image": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800"
+    },
+    {
+        "id": 6,
+        "title": "Cinematic Desert Landscape",
+        "category": "Fantasy",
+        "model": "Stable Diffusion",
+        "prompt": "Cinematic desert environment, golden hour lighting, long shadows, epic atmosphere, movie-grade scenery",
+        "image": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800"
+    },
+    {
+        "id": 7,
+        "title": "3D Neon Abstract Shape",
+        "category": "3D",
+        "model": "Midjourney",
+        "prompt": "Futuristic 3D neon abstract cube, glowing energy core, dark ambience, volumetric fog",
+        "image": "https://images.unsplash.com/photo-1604076931279-7c36b8d93d59?auto=format&fit=crop&w=800"
+    },
+    {
+        "id": 8,
+        "title": "Anime Samurai Warrior",
+        "category": "Anime",
+        "model": "Niji",
+        "prompt": "Anime samurai warrior, intense expression, cherry blossoms falling, cinematic anime style, high detail",
+        "image": "https://images.unsplash.com/photo-1549880338-65ddcdfd017b?auto=format&fit=crop&w=800"
+    },
+    {
+        "id": 9,
+        "title": "Luxury Gold Logo",
+        "category": "Logo",
+        "model": "Midjourney",
+        "prompt": "Elegant luxury gold emblem logo, black background, golden reflections, premium branding",
+        "image": "https://via.placeholder.com/500x500?text=Gold+Logo"
+    },
+    {
+        "id": 10,
+        "title": "Woman Portrait – Natural Style",
+        "category": "Portrait",
+        "model": "Stable Diffusion",
+        "prompt": "Natural style portrait of a woman, soft lighting, realistic skin texture, calm mood, DSLR photography",
+        "image": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800"
     }
+
+       
+    
 ]
+
+
