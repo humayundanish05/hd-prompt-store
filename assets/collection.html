@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Collection - AI Prompt Hub</title>
+    <link rel="stylesheet" href="collection.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <h1>AI Prompt Hub</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="prompts.html">Prompts</a>
+            <a class="active" href="collection.html">My Collection</a>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <h2 class="page-title">My Saved Prompts</h2>
+        <p class="subtitle">Your favorite AI prompts stored here for quick access.</p>
+
+        <div id="collectionGrid" class="grid"></div>
+
+        <div id="emptyMessage" class="empty-box" style="display:none;">
+            No prompts saved yet. Browse and add your favorite prompts!
+        </div>
+    </div>
+
+
+    <script>
+        function loadCollection() {
+            const saved = JSON.parse(localStorage.getItem("savedPrompts") || "[]");
+
+            const grid = document.getElementById("collectionGrid");
+            const empty = document.getElementById("emptyMessage");
+
+            if (saved.length === 0) {
+                empty.style.display = "block";
+                grid.innerHTML = "";
+                return;
+            }
+
+            empty.style.display = "none";
+
+            grid.innerHTML = saved.map(p => `
+                <div class="card">
+                    <img src="${p.image}">
+                    <h3>${p.title}</h3>
+                    <div class="meta">Model: ${p.model}</div>
+
+                    <div class="card-buttons">
+                        <button class="btn" onclick="copyPrompt('${p.prompt}')">Copy</button>
+                        <button class="btn remove" onclick="removePrompt(${p.id})">Remove</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function copyPrompt(txt) {
+            navigator.clipboard.writeText(txt);
+            alert("Prompt Copied!");
+        }
+
+        function removePrompt(id) {
+            let saved = JSON.parse(localStorage.getItem("savedPrompts") || "[]");
+            saved = saved.filter(item => item.id !== id);
+            localStorage.setItem("savedPrompts", JSON.stringify(saved));
+            loadCollection();
+        }
+
+        loadCollection();
+    </script>
+
+</body>
+</html>
