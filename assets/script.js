@@ -1,64 +1,115 @@
-// universal helper to get query param
+// ===============================
+// Universal Helper (Get Query Param)
+// ===============================
 function getQueryParam(name) {
   const url = new URL(window.location.href);
   return url.searchParams.get(name);
 }
 
-// load JSON (works on GitHub Pages if path correct)
+// ===============================
+// Load JSON (GitHub Pages friendly)
+// ===============================
 async function loadPrompts() {
-  const res = await fetch('/data/prompts.json');
+  const res = await fetch('data/prompts.json'); // correct path
   return await res.json();
 }
 
-// prompt list rendering on prompts.html (keep existing)
+// ===============================
+// Escape HTML
+// ===============================
+function escapeHtml(text) {
+  return text.replace(/[&<>"']/g, (m) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[m]);
+}
+
+// ========================================
+// Render Prompt List (Prompts Page)
+// ========================================
+let allPrompts = [];
+
 async function showPrompts(prompts) {
   const container = document.getElementById('prompt-list');
   if (!container) return;
-  container.innerHTML = prompts.map(p => `
+
+  container.innerHTML = prompts
+    .map(
+      (p) => `
     <div class="card">
       <img src="${p.image}" alt="${p.title}" />
       <h3>${p.title}</h3>
-      <div class="meta">Model: ${p.model || 'Any'}</div>
+      <div class="meta">Category: ${p.category || "Unknown"}</div>
       <div class="actions">
         <a class="btn" href="prompt-details.html?id=${p.id}">View</a>
-        <button class="btn" data-id="${p.id}" onclick="quickCopy(${p.id})">Copy</button>
+        <button class="btn" onclick="quickCopy(${p.id})">Copy</button>
       </div>
-    </div>
-  `).join('');
+    </div>`
+    )
+    .join('');
 }
 
-// quick copy used on list cards
+// ===============================
+// Quick Copy Button
+// ===============================
 async function quickCopy(id) {
   const prompts = await loadPrompts();
-  const p = prompts.find(x => x.id == id);
+  const p = prompts.find((x) => x.id == id);
   if (!p) return alert('Prompt not found');
+
   await navigator.clipboard.writeText(p.prompt);
-  alert('Prompt copied to clipboard!');
+  alert('Prompt copied!');
 }
 
-// prompt details page logic
+// ========================================
+// Category Filter
+// ========================================
+async function filterByCategory(category) {
+  let filtered;
+
+  if (category === "All") {
+    filtered = allPrompts;
+  } else {
+    filtered = allPrompts.filter((p) => p.category === category);
+  }
+
+  showPrompts(filtered);
+}
+
+// ========================================
+// Prompt Details Page Logic
+// ========================================
 async function renderDetails() {
   const id = getQueryParam('id');
+  const detailsBox = document.getElementById('details');
+
   if (!id) {
-    document.getElementById('details').innerText = 'No prompt id.';
+    detailsBox.innerText = "No prompt id.";
     return;
   }
+
   const prompts = await loadPrompts();
-  const p = prompts.find(x => x.id == id);
+  const p = prompts.find((x) => x.id == id);
+
   if (!p) {
-    document.getElementById('details').innerText = 'Prompt not found.';
+    detailsBox.innerText = "Prompt not found.";
     return;
   }
 
   const html = `
     <div class="detail-grid">
       <div>
-        <img class="hero-image" src="${p.image}" alt="${p.title}"/>
+        <img class="hero-image" src="${p.image}" alt="${p.title}" />
       </div>
       <div>
         <h2>${p.title}</h2>
-        <p class="meta">Model: ${p.model || 'Midjourney/SD'}</p>
+        <p class="meta">Category: ${p.category || "Unknown"}</p>
+
         <pre id="promptText" class="prompt-box">${escapeHtml(p.prompt)}</pre>
+
         <div class="actions">
           <button class="btn" id="copyBtn">Copy Prompt</button>
           <button class="btn" id="previewBtn">Preview Image</button>
@@ -67,11 +118,13 @@ async function renderDetails() {
       </div>
     </div>
   `;
-  document.getElementById('details').innerHTML = html;
 
+  detailsBox.innerHTML = html;
+
+  // Buttons
   document.getElementById('copyBtn').addEventListener('click', async () => {
     await navigator.clipboard.writeText(p.prompt);
-    alert('Prompt copied!');
+    alert('Prompt Copied!');
   });
 
   document.getElementById('previewBtn').addEventListener('click', () => {
@@ -83,53 +136,52 @@ async function renderDetails() {
   });
 }
 
-// modal helpers
+// ========================================
+// Modal Helpers
+// ========================================
 function openModal(src) {
-  document.getElementById('modalImageWrap').innerHTML = `<img src="${src}" style="max-width:100%"/>`;
+  document.getElementById('modalImageWrap').innerHTML = `
+      <img src="${src}" style="max-width:100%" />
+    `;
   document.getElementById('modal').classList.remove('hidden');
 }
+
 document.addEventListener('click', (e) => {
-  if (e.target && e.target.id === 'closeModal') document.getElementById('modal').classList.add('hidden');
+  if (e.target && e.target.id === 'closeModal') {
+    document.getElementById('modal').classList.add('hidden');
+  }
 });
 
-// save to localStorage (simple collections)
+// ========================================
+// Save Prompt to Collection (LocalStorage)
+// ========================================
 function saveToCollection(p) {
   const key = 'hd_prompts_collection';
   const cur = JSON.parse(localStorage.getItem(key) || '[]');
-  if (cur.find(x=>x.id==p.id)) return alert('Already saved');
+
+  if (cur.find((x) => x.id == p.id))
+    return alert('Already saved');
+
   cur.push(p);
   localStorage.setItem(key, JSON.stringify(cur));
   alert('Saved to My Collection');
 }
 
-function escapeHtml(text){
-  return text.replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]);
-}
-
-// init
+// ========================================
+// INIT — Auto detect page & load correct content
+// ========================================
 (async function init() {
-  // if on list page
-  if (document.getElementById('prompt-list')) {
-    const prompts = await loadPrompts();
-    showPrompts(prompts);
+  const listBox = document.getElementById('prompt-list');
+  const detailsBox = document.getElementById('details');
+
+  // If on prompt list page
+  if (listBox) {
+    allPrompts = await loadPrompts();
+    showPrompts(allPrompts);
   }
-  // if on details page
-  if (document.getElementById('details')) {
+
+  // If on details page
+  if (detailsBox) {
     renderDetails();
   }
 })();
-let allPrompts = [];
-
-function filterByCategory(category) {
-    let filtered = [];
-
-    if (category === "All") {
-        filtered = allPrompts;
-    } else {
-        filtered = allPrompts.filter(p => p.category === category);
-    }
-
-    displayPrompts(filtered);
-}
-
-
