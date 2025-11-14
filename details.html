@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Details</title>
+    <link rel="stylesheet" href="details.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <h1>AI Prompt Hub</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="prompts.html">Prompts</a>
+            <a href="collection.html">My Collection</a>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <div id="detailsArea"></div>
+
+    </div>
+
+    <script>
+        async function loadDetails() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get("id");
+
+            const res = await fetch("/data/prompts.json");
+            const data = await res.json();
+
+            const p = data.find(item => item.id == id);
+            if (!p) return;
+
+            document.getElementById("detailsArea").innerHTML = `
+                <div class="details-grid">
+
+                    <!-- IMAGE -->
+                    <div class="image-box">
+                        <img src="${p.image}" alt="${p.title}">
+                    </div>
+
+                    <!-- TEXT INFO -->
+                    <div>
+                        <h2 class="title">${p.title}</h2>
+                        <div class="meta-line">Model: ${p.model} | Category: ${p.category}</div>
+
+                        <div>
+                            <span class="tag">${p.model}</span>
+                            <span class="tag">${p.category}</span>
+                        </div>
+
+                        <h3 class="section-title">Prompt</h3>
+
+                        <div class="prompt-box">${p.prompt}</div>
+
+                        <!-- BUTTONS -->
+                        <div class="btn-row">
+                            <button class="btn" onclick="copyPrompt(\`${p.prompt}\`)">Copy Prompt</button>
+                            <button class="btn secondary" onclick="savePrompt(${p.id})">Save to Collection</button>
+                        </div>
+                    </div>
+
+                </div>
+            `;
+        }
+
+        function copyPrompt(text) {
+            navigator.clipboard.writeText(text);
+            alert("Prompt Copied!");
+        }
+
+        function savePrompt(id) {
+            fetch("/data/prompts.json")
+                .then(res => res.json())
+                .then(data => {
+                    const item = data.find(x => x.id == id);
+                    if (!item) return;
+
+                    let saved = JSON.parse(localStorage.getItem("savedPrompts") || "[]");
+                    if (!saved.find(x => x.id == id)) {
+                        saved.push(item);
+                        localStorage.setItem("savedPrompts", JSON.stringify(saved));
+                        alert("Added to Collection!");
+                    } else {
+                        alert("Already in Collection!");
+                    }
+                });
+        }
+
+        loadDetails();
+    </script>
+
+</body>
+</html>
