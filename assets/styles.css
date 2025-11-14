@@ -52,3 +52,26 @@ nav a {
 .btn.small{padding:6px 10px; font-size:13px;}
 .actions{margin-top:12px; display:flex; gap:8px;}
 .meta{color:#9aaecf; font-size:13px;}
+.categories {
+    display: flex;
+    gap: 10px;
+    margin: 20px;
+    flex-wrap: wrap;
+}
+
+.categories button {
+    padding: 10px 20px;
+    border: none;
+    background: #4b5bfd;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.categories button:hover {
+    background: #3743c4;
+}
+
+
+
