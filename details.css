@@ -1,0 +1,167 @@
+/* -----------------------------
+   GLOBAL
+----------------------------- */
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #0f0f14;
+    color: #fff;
+}
+
+/* -----------------------------
+   HEADER
+----------------------------- */
+header {
+    background: #13131d;
+    padding: 20px 20px;
+    border-bottom: 1px solid #222230;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    color: #d6e0ff;
+    font-size: 26px;
+}
+
+nav a {
+    color: #7ea1ff;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 15px;
+    transition: .3s;
+}
+
+nav a:hover,
+nav a.active {
+    color: #fff;
+}
+
+/* -----------------------------
+   MAIN CONTAINER
+----------------------------- */
+.container {
+    max-width: 1050px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+/* -----------------------------
+   GRID
+----------------------------- */
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+}
+
+@media (max-width: 850px) {
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* -----------------------------
+   IMAGE CARD
+----------------------------- */
+.image-box {
+    background: #16161f;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid #272737;
+    transition: .3s;
+}
+
+.image-box img {
+    width: 100%;
+    border-radius: 12px;
+}
+
+.image-box:hover {
+    border-color: #4b63ff;
+    box-shadow: 0 0 15px #4b63ff55;
+}
+
+/* -----------------------------
+   DETAILS TEXT
+----------------------------- */
+.title {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.meta-line {
+    color: #99a4c8;
+    margin-bottom: 18px;
+}
+
+.tag {
+    display: inline-block;
+    background: #222233;
+    color: #9fb4ff;
+    padding: 6px 14px;
+    border-radius: 8px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #33334a;
+    font-size: 14px;
+}
+
+/* -----------------------------
+   PROMPT BOX
+----------------------------- */
+.prompt-box {
+    background: #13131c;
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid #232332;
+    white-space: pre-wrap;
+    color: #e4e8ff;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* -----------------------------
+   BUTTONS
+----------------------------- */
+.btn-row {
+    display: flex;
+    gap: 12px;
+}
+
+.btn {
+    background: linear-gradient(135deg, #5268ff, #7387ff);
+    padding: 12px 18px;
+    border-radius: 8px;
+    border: none;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 12px #4b63ff88;
+}
+
+.btn.secondary {
+    background: #2e2e39;
+}
+
+.btn.secondary:hover {
+    background: #ff4e4e;
+    box-shadow: 0 0 12px #ff4e4e66;
+}
+
+/* -----------------------------
+   SECTION TITLE
+----------------------------- */
+.section-title {
+    margin-top: 40px;
+    margin-bottom: 15px;
+    font-size: 24px;
+}
