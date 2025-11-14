@@ -3,24 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HD Prompt Store</title>
-    <link rel="stylesheet" href="assets/styles.css">
+    <title>AI Prompt Gallery</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-<header>
-    <h1>HD Prompt Store</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="prompts.html">Prompts</a>
-    </nav>
-</header>
+    <!-- =======================
+         HEADER
+    ======================== -->
+    <header>
+        <h1>AI Prompt Hub</h1>
+        <nav>
+            <a href="index.html" class="active">Home</a>
+            <a href="prompts.html">Prompts</a>
+            <a href="collection.html">My Collection</a>
+        </nav>
+    </header>
 
-<section class="hero">
-    <h2>High Quality AI Image Prompts</h2>
-    <p>Midjourney, DALL·E, Stable Diffusion prompts for everyone!</p>
-    <a class="btn" href="prompts.html">Browse Prompts</a>
-</section>
+    <!-- =======================
+         HERO SECTION
+    ======================== -->
+    <section class="hero">
+        <h2 class="hero-title">Create Stunning AI Art & Images</h2>
+        <p class="hero-sub">Discover high-quality Midjourney & Stable Diffusion prompts to speed up your creative workflow.</p>
+
+        <div style="margin-top:20px;">
+            <input id="searchBox" type="text" placeholder="Search prompts..." 
+                   style="padding:12px 16px; width:280px; border-radius:8px; border:none; outline:none; background:#1a1a22; color:white;">
+        </div>
+
+        <div style="margin-top:25px;">
+            <a href="prompts.html" class="btn">Browse Prompts</a>
+        </div>
+    </section>
+
+    <!-- =======================
+         FEATURED CATEGORIES
+    ======================== -->
+    <div class="container">
+        <h2 style="margin-bottom:15px;">Featured Categories</h2>
+
+        <div class="categories">
+            <button onclick="window.location='prompts.html?category=Portraits'">Portraits</button>
+            <button onclick="window.location='prompts.html?category=Landscapes'">Landscapes</button>
+            <button onclick="window.location='prompts.html?category=Anime'">Anime</button>
+            <button onclick="window.location='prompts.html?category=3D Art'">3D Art</button>
+            <button onclick="window.location='prompts.html?category=Logos'">Logos</button>
+            <button onclick="window.location='prompts.html?category=Wallpapers'">Wallpapers</button>
+        </div>
+    </div>
+
+    <!-- =======================
+         FEATURED PROMPTS (PREVIEW)
+    ======================== -->
+
+    <div class="container">
+        <h2 style="margin-bottom:15px;">Popular Prompts</h2>
+
+        <div id="featuredPrompts" class="grid-container">
+            <!-- Will load dynamically with JS -->
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+
+    <script>
+        /* Load 6 random prompts on index homepage */
+        async function loadFeatured() {
+            try {
+                const res = await fetch('/data/prompts.json');
+                const data = await res.json();
+
+                // pick 6 random prompts
+                const shuffled = data.sort(() => 0.5 - Math.random()).slice(0, 6);
+
+                const container = document.getElementById("featuredPrompts");
+                container.innerHTML = shuffled.map(p => `
+                    <div class="card">
+                        <img src="${p.image}" alt="${p.title}">
+                        <h3>${p.title}</h3>
+                        <div class="meta">Model: ${p.model || 'Any'}</div>
+                        <div class="actions">
+                            <a class="btn small" href="prompt-details.html?id=${p.id}">View</a>
+                            <button class="btn small" onclick="copyPrompt(${p.id})">Copy</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error("Error loading featured prompts:", err);
+            }
+        }
+
+        async function copyPrompt(id) {
+            const res = await fetch('/data/prompts.json');
+            const data = await res.json();
+            const p = data.find(x => x.id == id);
+            if (!p) return;
+            await navigator.clipboard.writeText(p.prompt);
+            alert("Prompt Copied!");
+        }
+
+        loadFeatured();
+    </script>
 
 </body>
 </html>
