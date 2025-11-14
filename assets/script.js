@@ -118,3 +118,18 @@ function escapeHtml(text){
     renderDetails();
   }
 })();
+let allPrompts = [];
+
+function filterByCategory(category) {
+    let filtered = [];
+
+    if (category === "All") {
+        filtered = allPrompts;
+    } else {
+        filtered = allPrompts.filter(p => p.category === category);
+    }
+
+    displayPrompts(filtered);
+}
+
+
