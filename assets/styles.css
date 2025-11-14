@@ -1,175 +1,177 @@
-/* Global Base */
+/* PAGE BASE */
 body {
-    font-family: Arial, sans-serif;
-    background: #0d0d10;
-    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0e0e11;
+    color: #ffffff;
     margin: 0;
+    padding: 0;
 }
 
-h1, h2, h3 {
-    margin: 0;
-}
-
-a {
-    color: #58a6ff;
-}
-
-/* Header */
 header {
-    background: #111;
-    padding: 20px;
+    background: #121217;
+    padding: 18px;
     text-align: center;
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid #1f1f2a;
 }
 
-nav a {
-    color: #58a6ff;
-    margin: 0 12px;
+header nav a {
+    color: #7ab4ff;
+    margin: 0 15px;
     text-decoration: none;
-    font-size: 15px;
+    font-size: 16px;
+    transition: 0.2s;
 }
 
-nav a.active {
-    font-weight: bold;
+header nav a:hover,
+header nav a.active {
+    color: #ffffff;
 }
 
-/* Hero Section */
-.hero {
-    text-align: center;
-    padding: 100px 20px 70px;
-}
-
-.hero-title {
-    font-size: 38px;
-    font-weight: bold;
-}
-
-.hero-sub {
-    color: #b9c6e2;
-    font-size: 17px;
-    margin-top: 10px;
-    max-width: 600px;
-    margin-inline: auto;
-}
-
-/* Buttons */
-.btn {
-    padding: 10px 20px;
-    background: #58a6ff;
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    display: inline-block;
-    border: none;
-    cursor: pointer;
-}
-
-.btn:hover {
-    background: #3d8eea;
-}
-
-.btn.small {
-    padding: 6px 10px;
-    font-size: 13px;
-}
-
-/* Containers */
-.container {
-    padding: 20px;
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-/* Categories */
+/* CATEGORY BUTTONS */
 .categories {
     display: flex;
-    gap: 10px;
-    margin: 20px 0;
+    justify-content: center;
+    gap: 12px;
     flex-wrap: wrap;
+    margin: 25px 0;
 }
 
 .categories button {
-    padding: 10px 20px;
+    padding: 10px 22px;
     border: none;
-    background: #4b5bfd;
+    background: linear-gradient(135deg, #4a63ff, #5f7cff);
     color: white;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: 0.25s;
+    box-shadow: 0px 0px 10px rgba(72, 98, 255, 0.4);
 }
 
 .categories button:hover {
-    background: #3743c4;
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, #6c83ff, #8297ff);
 }
 
-/* Grid for Prompts */
+/* GRID CONTAINER */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 20px;
+    gap: 22px;
+    padding: 20px;
+    max-width: 1100px;
+    margin: auto;
 }
 
+/* CARD DESIGN */
 .card {
-    background: #1a1a22;
-    padding: 18px;
-    border-radius: 10px;
-    border: 1px solid #222;
-    transition: transform 0.2s ease;
+    background: #181820;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #262635;
+    transition: 0.25s;
+    position: relative;
 }
 
 .card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-5px);
+    border-color: #3d4bff;
 }
 
 .card img {
     width: 100%;
-    border-radius: 8px;
-    margin-bottom: 10px;
+    border-radius: 10px;
+    margin-bottom: 12px;
 }
 
-/* Meta text */
+.card h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
 .meta {
-    color: #9aaecf;
-    font-size: 13px;
-    margin: 5px 0;
+    margin-top: 5px;
+    color: #a0b2d6;
+    font-size: 14px;
 }
 
-/* Actions row */
+/* BUTTONS INSIDE CARDS */
 .actions {
     margin-top: 12px;
     display: flex;
-    gap: 8px;
+    gap: 10px;
 }
 
-/* Details Page */
-.detail-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.hero-image {
-    width: 100%;
-    border-radius: 10px;
-}
-
-.prompt-box {
-    background: #0b0b0f;
-    padding: 12px;
+.btn {
+    flex: 1;
+    padding: 8px 14px;
     border-radius: 6px;
-    white-space: pre-wrap;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    transition: 0.25s;
 }
 
-/* Modal */
+.btn:first-child {
+    background: #4f67ff;
+    color: white;
+}
+
+.btn:first-child:hover {
+    background: #6b80ff;
+}
+
+.btn:last-child {
+    background: #31313f;
+    color: #d1d1e0;
+}
+
+.btn:last-child:hover {
+    background: #4c4c61;
+}
+
+/* MODAL */
 .modal {
     position: fixed;
     inset: 0;
     display: flex;
-    align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.75);
+    align-items: center;
+    background: rgba(15, 15, 20, 0.85);
+    backdrop-filter: blur(6px);
 }
 
 .modal.hidden {
     display: none;
+}
+
+.modal-content {
+    background: #1a1a23;
+    padding: 15px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 520px;
+    position: relative;
+    text-align: center;
+}
+
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #ffffff;
+    transition: 0.2s;
+}
+
+.close-btn:hover {
+    color: #ff4d4d;
+}
+
+#modalImageWrap img {
+    max-width: 100%;
+    border-radius: 10px;
 }
