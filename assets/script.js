@@ -1,187 +1,177 @@
-// ===============================
-// Universal Helper (Get Query Param)
-// ===============================
+// =========================================================
+// GET QUERY PARAMETER
+// =========================================================
 function getQueryParam(name) {
-  const url = new URL(window.location.href);
-  return url.searchParams.get(name);
+  return new URL(window.location.href).searchParams.get(name);
 }
 
-// ===============================
-// Load JSON (GitHub Pages friendly)
-// ===============================
+// =========================================================
+// LOAD JSON (GitHub Pages Safe)
+// =========================================================
 async function loadPrompts() {
-  const res = await fetch('data/prompts.json'); // correct path
-  return await res.json();
+  const response = await fetch("data/prompts.json");
+  return await response.json();
 }
 
-// ===============================
-// Escape HTML
-// ===============================
+// =========================================================
+// Escape HTML for prompt display
+// =========================================================
 function escapeHtml(text) {
   return text.replace(/[&<>"']/g, (m) => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;'
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
   })[m]);
 }
 
-// ========================================
-// Render Prompt List (Prompts Page)
-// ========================================
+// =========================================================
+// GLOBAL PROMPT ARRAY
+// =========================================================
 let allPrompts = [];
 
+// =========================================================
+// SHOW PROMPTS LIST (prompts.html)
+// =========================================================
 async function showPrompts(prompts) {
-  const container = document.getElementById('prompt-list');
+  const container = document.getElementById("prompt-list");
   if (!container) return;
 
   container.innerHTML = prompts
     .map(
       (p) => `
-    <div class="card">
-      <img src="${p.image}" alt="${p.title}" />
-      <h3>${p.title}</h3>
-      <div class="meta">Category: ${p.category || "Unknown"}</div>
-      <div class="actions">
-        <a class="btn" href="prompt-details.html?id=${p.id}">View</a>
-        <button class="btn" onclick="quickCopy(${p.id})">Copy</button>
-      </div>
-    </div>`
-    )
-    .join('');
-}
-
-// ===============================
-// Quick Copy Button
-// ===============================
-async function quickCopy(id) {
-  const prompts = await loadPrompts();
-  const p = prompts.find((x) => x.id == id);
-  if (!p) return alert('Prompt not found');
-
-  await navigator.clipboard.writeText(p.prompt);
-  alert('Prompt copied!');
-}
-
-// ========================================
-// Category Filter
-// ========================================
-async function filterByCategory(category) {
-  let filtered;
-
-  if (category === "All") {
-    filtered = allPrompts;
-  } else {
-    filtered = allPrompts.filter((p) => p.category === category);
-  }
-
-  showPrompts(filtered);
-}
-
-// ========================================
-// Prompt Details Page Logic
-// ========================================
-async function renderDetails() {
-  const id = getQueryParam('id');
-  const detailsBox = document.getElementById('details');
-
-  if (!id) {
-    detailsBox.innerText = "No prompt id.";
-    return;
-  }
-
-  const prompts = await loadPrompts();
-  const p = prompts.find((x) => x.id == id);
-
-  if (!p) {
-    detailsBox.innerText = "Prompt not found.";
-    return;
-  }
-
-  const html = `
-    <div class="detail-grid">
-      <div>
-        <img class="hero-image" src="${p.image}" alt="${p.title}" />
-      </div>
-      <div>
-        <h2>${p.title}</h2>
-        <p class="meta">Category: ${p.category || "Unknown"}</p>
-
-        <pre id="promptText" class="prompt-box">${escapeHtml(p.prompt)}</pre>
+      <div class="card">
+        <img src="${p.image}" alt="${p.title}">
+        <h3>${p.title}</h3>
+        <div class="meta">Category: ${p.category}</div>
 
         <div class="actions">
-          <button class="btn" id="copyBtn">Copy Prompt</button>
-          <button class="btn" id="previewBtn">Preview Image</button>
-          <button class="btn" id="saveBtn">Save to Collection</button>
+          <a class="btn small" href="prompt-details.html?id=${p.id}">View</a>
+          <button class="btn small" onclick="quickCopy(${p.id})">Copy</button>
         </div>
       </div>
+    `
+    )
+    .join("");
+}
+
+// =========================================================
+// COPY PROMPT QUICK (LIST PAGE)
+// =========================================================
+async function quickCopy(id) {
+  const p = allPrompts.find((x) => x.id == id);
+  if (!p) return alert("Prompt not found.");
+
+  navigator.clipboard.writeText(p.prompt);
+  alert("Prompt Copied!");
+}
+
+// =========================================================
+// CATEGORY FILTER
+// =========================================================
+function filterByCategory(category) {
+  if (!allPrompts.length) return;
+
+  if (category === "All") {
+    showPrompts(allPrompts);
+  } else {
+    const filtered = allPrompts.filter((p) => p.category === category);
+    showPrompts(filtered);
+  }
+}
+
+// =========================================================
+// RENDER DETAILS PAGE (prompt-details.html)
+// =========================================================
+async function renderDetails() {
+  const id = getQueryParam("id");
+  const box = document.getElementById("details");
+
+  if (!id || !box) return;
+
+  const p = allPrompts.find((x) => x.id == id);
+  if (!p) {
+    box.innerHTML = "<p>Prompt not found.</p>";
+    return;
+  }
+
+  box.innerHTML = `
+    <div class="details-grid">
+
+      <!-- IMAGE -->
+      <div class="image-box">
+        <img src="${p.image}" alt="${p.title}">
+      </div>
+
+      <!-- TEXT -->
+      <div>
+        <h2 class="title">${p.title}</h2>
+        <div class="meta-line">Category: ${p.category}</div>
+
+        <h3 class="section-title">Prompt</h3>
+        <div class="prompt-box">${escapeHtml(p.prompt)}</div>
+
+        <div class="btn-row">
+          <button class="btn" onclick="copyText('${encodeURIComponent(p.prompt)}')">Copy Prompt</button>
+          <button class="btn secondary" onclick="saveToCollection(${p.id})">Save to Collection</button>
+        </div>
+      </div>
+
     </div>
   `;
-
-  detailsBox.innerHTML = html;
-
-  // Buttons
-  document.getElementById('copyBtn').addEventListener('click', async () => {
-    await navigator.clipboard.writeText(p.prompt);
-    alert('Prompt Copied!');
-  });
-
-  document.getElementById('previewBtn').addEventListener('click', () => {
-    openModal(p.image);
-  });
-
-  document.getElementById('saveBtn').addEventListener('click', () => {
-    saveToCollection(p);
-  });
 }
 
-// ========================================
-// Modal Helpers
-// ========================================
+// Copy for details page
+function copyText(text) {
+  navigator.clipboard.writeText(decodeURIComponent(text));
+  alert("Prompt Copied!");
+}
+
+// =========================================================
+// SAVE TO COLLECTION (LOCAL STORAGE)
+// =========================================================
+function saveToCollection(id) {
+  const key = "hd_prompts_collection";
+  const p = allPrompts.find((x) => x.id == id);
+  if (!p) return;
+
+  let current = JSON.parse(localStorage.getItem(key) || "[]");
+
+  if (current.some((x) => x.id == id))
+    return alert("Already saved!");
+
+  current.push(p);
+  localStorage.setItem(key, JSON.stringify(current));
+
+  alert("Saved to My Collection!");
+}
+
+// =========================================================
+// MODAL (Image Preview)
+// =========================================================
 function openModal(src) {
-  document.getElementById('modalImageWrap').innerHTML = `
-      <img src="${src}" style="max-width:100%" />
-    `;
-  document.getElementById('modal').classList.remove('hidden');
+  document.getElementById("modalImageWrap").innerHTML = `<img src="${src}" style="max-width:100%;">`;
+  document.getElementById("modal").classList.remove("hidden");
 }
 
-document.addEventListener('click', (e) => {
-  if (e.target && e.target.id === 'closeModal') {
-    document.getElementById('modal').classList.add('hidden');
+document.addEventListener("click", (e) => {
+  if (e.target.id === "closeModal") {
+    document.getElementById("modal").classList.add("hidden");
   }
 });
 
-// ========================================
-// Save Prompt to Collection (LocalStorage)
-// ========================================
-function saveToCollection(p) {
-  const key = 'hd_prompts_collection';
-  const cur = JSON.parse(localStorage.getItem(key) || '[]');
-
-  if (cur.find((x) => x.id == p.id))
-    return alert('Already saved');
-
-  cur.push(p);
-  localStorage.setItem(key, JSON.stringify(cur));
-  alert('Saved to My Collection');
-}
-
-// ========================================
-// INIT — Auto detect page & load correct content
-// ========================================
+// =========================================================
+// INIT AUTO DETECT PAGE
+// =========================================================
 (async function init() {
-  const listBox = document.getElementById('prompt-list');
-  const detailsBox = document.getElementById('details');
+  allPrompts = await loadPrompts();
 
-  // If on prompt list page
-  if (listBox) {
-    allPrompts = await loadPrompts();
+  if (document.getElementById("prompt-list")) {
     showPrompts(allPrompts);
   }
 
-  // If on details page
-  if (detailsBox) {
+  if (document.getElementById("details")) {
     renderDetails();
   }
 })();
