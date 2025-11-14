@@ -1,57 +1,101 @@
+
+/* ===============================
+   Global Base Styles
+=============================== */
+
 body {
-    font-family: Arial, sans-serif;
-    background: #0d0d10;
-    color: white;
     margin: 0;
+    padding: 0;
+    background: #0d0d10;
+    color: #e4e4e6;
+    font-family: 'Inter', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ===============================
+   Header
+=============================== */
+
 header {
-    background: #111;
-    padding: 20px;
-    text-align: center;
+    background: #111118;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #1e1e27;
+}
+
+header h1 {
+    font-size: 22px;
+    margin: 0;
+    color: #58a6ff;
 }
 
 nav a {
-    color: #58a6ff;
-    margin: 0 10px;
-    text-decoration: none;
+    margin-left: 18px;
+    color: #9dbbe8;
+    font-size: 14px;
+    transition: 0.2s;
 }
+
+nav a:hover,
+nav a.active {
+    color: #58a6ff;
+}
+
+/* ===============================
+   Hero Section
+=============================== */
 
 .hero {
     text-align: center;
     padding: 80px 20px;
 }
 
+.hero-title {
+    font-size: 38px;
+    margin-bottom: 8px;
+}
+
+.hero-sub {
+    color: #9aaecf;
+    max-width: 600px;
+    margin: 0 auto 25px;
+}
+
+/* ===============================
+   Buttons
+=============================== */
+
 .btn {
-    padding: 10px 20px;
-    background: #58a6ff;
+    padding: 10px 18px;
+    background: #4b5bfd;
     color: white;
-    text-decoration: none;
-    border-radius: 5px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 20px;
+.btn:hover {
+    background: #3a47d5;
 }
 
-.card {
-    background: #1a1a22;
-    padding: 20px;
-    border-radius: 10px;
+.btn.small {
+    padding: 6px 10px;
+    font-size: 13px;
 }
 
-.container{padding:20px; max-width:1000px; margin:0 auto;}
-.detail-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start;}
-.hero-image{width:100%; border-radius:8px;}
-.prompt-box{background:#0b0b0f; padding:12px; border-radius:6px; white-space:pre-wrap;}
-.modal{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.7);}
-.modal.hidden{display:none;}
-.btn.small{padding:6px 10px; font-size:13px;}
-.actions{margin-top:12px; display:flex; gap:8px;}
-.meta{color:#9aaecf; font-size:13px;}
+/* ===============================
+   Category Buttons
+=============================== */
+
 .categories {
     display: flex;
     gap: 10px;
@@ -60,18 +104,153 @@ nav a {
 }
 
 .categories button {
-    padding: 10px 20px;
+    padding: 8px 16px;
     border: none;
-    background: #4b5bfd;
-    color: white;
+    background: #232334;
+    color: #9dbbe8;
     border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
+    transition: 0.25s;
 }
 
 .categories button:hover {
-    background: #3743c4;
+    background: #4b5bfd;
+    color: white;
 }
 
+/* ===============================
+   Grid for Prompt Cards
+=============================== */
 
+.grid-container {
+    padding: 25px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 22px;
+}
 
+.card {
+    background: #1a1a22;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    transition: 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.card h3 {
+    margin: 12px;
+    font-size: 15px;
+}
+
+.meta {
+    margin: 0 12px 10px;
+    color: #9aaecf;
+    font-size: 13px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    padding: 12px;
+}
+
+/* ===============================
+   Details Page Layout
+=============================== */
+
+.container {
+    padding: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 25px;
+}
+
+.hero-image {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.prompt-box {
+    background: #0b0b0f;
+    padding: 15px;
+    border-radius: 8px;
+    white-space: pre-wrap;
+    border: 1px solid #1f1f27;
+}
+
+/* ===============================
+   Modal Styles
+=============================== */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.75);
+    z-index: 1000;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: #1b1b24;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #fff;
+}
+
+/* ===============================
+   RESPONSIVE DESIGN
+=============================== */
+
+@media (max-width: 900px) {
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav {
+        margin-top: 10px;
+    }
+
+    .hero-title {
+        font-size: 28px;
+    }
+}
